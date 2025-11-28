@@ -21,7 +21,7 @@ document.addEventListener("mousemove", (e) => {
     x: e.clientX,
     y: e.clientY,
     duration: 0.2,
-    ease: "power2.out",
+    ease: "power2.out"
   });
 });
 
@@ -38,31 +38,32 @@ window.addEventListener("load", () => {
     .from(".image-frame", { scale: 0.85, y: 40, opacity: 0, duration: 0.9 }, "-=0.7");
 });
 
-// FLOAT IMAGE
+// FLOATING IMAGE
 gsap.to(".image-frame img", {
   y: -12,
   duration: 3,
   repeat: -1,
   yoyo: true,
-  ease: "sine.inOut",
+  ease: "sine.inOut"
 });
 
-// PROJECT CARDS SCROLL ANIMATION
+// PROJECT SCROLL ANIMATION — FIXED
 gsap.utils.toArray(".project-card").forEach((card, i) => {
-  gsap.from(card, {
-    y: 60,
-    opacity: 0,
+  gsap.to(card, {
+    opacity: 1,
+    y: 0,
     duration: 0.8,
     delay: i * 0.15,
     ease: "power3.out",
     scrollTrigger: {
       trigger: card,
-      start: "top 85%",
-    },
+      start: "top 90%",
+      once: true
+    }
   });
 });
 
-// SKILLS SCROLL
+// SKILLS SCROLL ANIMATION
 gsap.utils.toArray(".skill-card").forEach((card, i) => {
   gsap.to(card, {
     y: 0,
@@ -77,22 +78,22 @@ gsap.utils.toArray(".skill-card").forEach((card, i) => {
   });
 });
 
-// TESTIMONIALS SCROLL
+// TESTIMONIALS SCROLL ANIMATION
 gsap.utils.toArray(".testimonial-card").forEach((card, i) => {
   gsap.to(card, {
     y: 0,
     opacity: 1,
-    duration: 0.7,
-    delay: i * 0.2,
+    duration: 0.8,
+    delay: i * 0.15,
     ease: "power3.out",
     scrollTrigger: {
       trigger: card,
-      start: "top 90%",
+      start: "top 85%",
     },
   });
 });
 
-// ABOUT SECTION
+// ABOUT SECTION REVEAL
 gsap.from(".about-content", {
   x: -40,
   opacity: 0,
@@ -116,96 +117,63 @@ gsap.from(".about-image img", {
   },
 });
 
-// CURSOR HOVER
+// CURSOR HOVER EFFECT
 const hoverItems = document.querySelectorAll("button, a, .project-card, .skill-card, .testimonial-card");
 hoverItems.forEach((el) => {
   el.addEventListener("mouseenter", () => cursor.classList.add("hover"));
   el.addEventListener("mouseleave", () => cursor.classList.remove("hover"));
 });
 
-// CURSOR IMAGE PREVIEW
+// CURSOR IMAGE FOLLOW
 const cursorImg = document.querySelector(".cursor-image");
 document.addEventListener("mousemove", (e) => {
   gsap.to(cursorImg, {
     x: e.clientX + 25,
     y: e.clientY + 25,
     duration: 0.3,
-    ease: "power3.out",
+    ease: "power3.out"
   });
 });
 
-// PROJECT IMAGE PREVIEW
+// CURSOR IMAGE PREVIEW ON PROJECT HOVER
 const projectCards = document.querySelectorAll(".project-card");
 projectCards.forEach((card) => {
   card.addEventListener("mouseenter", () => {
     const img = card.getAttribute("data-image");
     cursorImg.style.backgroundImage = `url(${img})`;
-
-    gsap.to(cursorImg, {
-      opacity: 1,
-      scale: 1,
-      duration: 0.3,
-      ease: "power3.out",
-    });
+    gsap.to(cursorImg, { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out" });
   });
 
   card.addEventListener("mouseleave", () => {
-    gsap.to(cursorImg, {
-      opacity: 0,
-      scale: 0.6,
-      duration: 0.3,
-      ease: "power3.out",
-    });
+    gsap.to(cursorImg, { opacity: 0, scale: 0.6, duration: 0.3, ease: "power3.out" });
   });
 });
 
-// 🔥 MAGNETIC HOVER
+// MAGNETIC HOVER EFFECT
 const magneticElements = document.querySelectorAll(".primary-btn, .ghost-btn, .project-card");
 magneticElements.forEach((el) => {
   el.addEventListener("mousemove", (e) => {
     const rect = el.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
-
-    gsap.to(el, {
-      x: x * 0.25,
-      y: y * 0.25,
-      duration: 0.3,
-      ease: "power3.out",
-    });
+    gsap.to(el, { x: x * 0.25, y: y * 0.25, duration: 0.3, ease: "power3.out" });
   });
 
   el.addEventListener("mouseleave", () => {
-    gsap.to(el, {
-      x: 0,
-      y: 0,
-      duration: 0.6,
-      ease: "elastic.out(1, 0.4)",
-    });
+    gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.4)" });
   });
 });
 
-// 🔥 PARALLAX 3D HOVER
+// 3D PARALLAX ON PROJECT CARDS
 projectCards.forEach((card) => {
   card.addEventListener("mousemove", (e) => {
     const rect = card.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
     const y = ((e.clientY - rect.top) / rect.height - 0.5) * -20;
-
-    gsap.to(card, {
-      rotationY: x,
-      rotationX: y,
-      duration: 0.35,
-      ease: "power3.out",
-    });
+    gsap.to(card, { rotationY: x, rotationX: y, duration: 0.35 });
   });
 
   card.addEventListener("mouseleave", () => {
-    gsap.to(card, {
-      rotationY: 0,
-      rotationX: 0,
-      duration: 0.6,
-      ease: "power3.out",
-    });
+    gsap.to(card, { rotationY: 0, rotationX: 0, duration: 0.6 });
   });
 });
