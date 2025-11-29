@@ -164,6 +164,61 @@ magneticElements.forEach((el) => {
   });
 });
 
+const tiltButtons = document.querySelectorAll(".primary-btn, .ghost-btn");
+
+tiltButtons.forEach((btn) => {
+  btn.addEventListener("mousemove", (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
+
+    gsap.to(btn, {
+      rotationY: x,
+      rotationX: y,
+      duration: 0.3,
+      ease: "power3.out",
+    });
+  });
+
+  btn.addEventListener("mouseleave", () => {
+    gsap.to(btn, {
+      rotationY: 0,
+      rotationX: 0,
+      duration: 0.5,
+      ease: "power2.out",
+    });
+  });
+});
+
+
+// 🔥 HERO PARALLAX GLOW
+gsap.to(".hero-bg", {
+  xPercent: -20,
+  yPercent: -10,
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".hero",
+    scrub: 1,
+  }
+});
+//Smooth scroll to Projects when clicking button
+document.getElementById("scroll-projects").addEventListener("click", () => {
+  gsap.to(window, {
+    duration: 1.2,
+    scrollTo: "#projects",
+    ease: "power3.out"
+  });
+});
+
+document.getElementById("scroll-about").addEventListener("click", () => {
+  gsap.to(window, {
+    duration: 1.2,
+    scrollTo: ".about",
+    ease: "power3.out"
+  });
+});
+
+
 // 3D PARALLAX ON PROJECT CARDS
 projectCards.forEach((card) => {
   card.addEventListener("mousemove", (e) => {
