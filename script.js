@@ -1,8 +1,6 @@
-
-// SMOOTH SCROLL SETUP
+// Smooth Scroll Setup
 const lenis = new Lenis({
   smooth: true,
-  smoothTouch: false,
   lerp: 0.08,
 });
 
@@ -11,225 +9,180 @@ function raf(time) {
   requestAnimationFrame(raf);
 }
 requestAnimationFrame(raf);
-
 lenis.on("scroll", ScrollTrigger.update);
 
-// CUSTOM CURSOR MOVE
+
+// Custom Cursor
 const cursor = document.querySelector(".cursor");
+const cursorImg = document.querySelector(".cursor-image");
 
 document.addEventListener("mousemove", (e) => {
-  gsap.to(cursor, {
-    x: e.clientX,
-    y: e.clientY,
-    duration: 0.2,
-    ease: "power2.out"
-  });
+  gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.2 });
+  gsap.to(cursorImg, { x: e.clientX + 25, y: e.clientY + 25, duration: 0.3 });
 });
 
-// HERO TEXT ANIMATION
+
+// Hero Animation
 window.addEventListener("load", () => {
   const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-  tl.from(".nav-logo", { y: -20, opacity: 0, duration: 0.6 })
-    .from(".nav-btn", { y: -20, opacity: 0, duration: 0.5 }, "-=0.4")
-    .from(".eyebrow", { y: 20, opacity: 0, duration: 0.5 })
-    .from(".hero-line", { y: 50, opacity: 0, stagger: 0.12, duration: 0.7 }, "-=0.2")
-    .from(".hero-desc", { y: 20, opacity: 0, duration: 0.5 }, "-=0.2")
-    .from(".hero-actions button", { y: 20, opacity: 0, stagger: 0.1, duration: 0.5 }, "-=0.3")
-    .from(".image-frame", { scale: 0.85, y: 40, opacity: 0, duration: 0.9 }, "-=0.7");
+  tl.from(".nav-logo", { y: -20, opacity: 0 })
+    .from(".nav-btn", { y: -20, opacity: 0 }, "-=0.4")
+    .from(".eyebrow", { y: 20, opacity: 0 })
+    .from(".hero-line", { y: 50, opacity: 0, stagger: 0.12 })
+    .from(".hero-desc", { y: 20, opacity: 0 }, "-=0.2")
+    .from(".hero-actions button", { y: 20, opacity: 0, stagger: 0.1 }, "-=0.3")
+    .from(".image-frame", { scale: 0.85, y: 40, opacity: 0 }, "-=0.7");
 });
 
-// FLOATING IMAGE
 gsap.to(".image-frame img", {
   y: -12,
   duration: 3,
   repeat: -1,
   yoyo: true,
-  ease: "sine.inOut"
 });
 
-// PROJECT SCROLL ANIMATION — FIXED
+
+// Scroll Animations
 gsap.utils.toArray(".project-card").forEach((card, i) => {
-  gsap.to(card, {
-    opacity: 1,
-    y: 0,
-    duration: 0.8,
+  gsap.from(card, {
+    opacity: 0,
+    y: 40,
     delay: i * 0.15,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: card,
-      start: "top 90%",
-      once: true
-    }
+    scrollTrigger: { trigger: card, start: "top 90%", once: true }
   });
 });
 
-// SKILLS SCROLL ANIMATION
 gsap.utils.toArray(".skill-card").forEach((card, i) => {
-  gsap.to(card, {
-    y: 0,
-    opacity: 1,
-    duration: 0.8,
+  gsap.from(card, {
+    opacity: 0,
+    y: 40,
     delay: i * 0.15,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: card,
-      start: "top 85%",
-    },
+    scrollTrigger: { trigger: card, start: "top 85%" }
   });
 });
 
-// TESTIMONIALS SCROLL ANIMATION
 gsap.utils.toArray(".testimonial-card").forEach((card, i) => {
-  gsap.to(card, {
-    y: 0,
-    opacity: 1,
-    duration: 0.8,
+  gsap.from(card, {
+    opacity: 0,
+    y: 40,
     delay: i * 0.15,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: card,
-      start: "top 85%",
-    },
+    scrollTrigger: { trigger: card, start: "top 85%" }
   });
 });
 
-// ABOUT SECTION REVEAL
+
+// About Reveal
 gsap.from(".about-content", {
   x: -40,
   opacity: 0,
-  duration: 1,
-  ease: "power3.out",
-  scrollTrigger: {
-    trigger: ".about",
-    start: "top 80%",
-  },
+  scrollTrigger: { trigger: ".about", start: "top 80%" }
 });
 
 gsap.from(".about-image img", {
   x: 40,
   opacity: 0,
-  duration: 1,
-  delay: 0.2,
-  ease: "power3.out",
-  scrollTrigger: {
-    trigger: ".about",
-    start: "top 80%",
-  },
+  delay: .2,
+  scrollTrigger: { trigger: ".about", start: "top 80%" }
 });
 
-// CURSOR HOVER EFFECT
-const hoverItems = document.querySelectorAll("button, a, .project-card, .skill-card, .testimonial-card");
-hoverItems.forEach((el) => {
-  el.addEventListener("mouseenter", () => cursor.classList.add("hover"));
-  el.addEventListener("mouseleave", () => cursor.classList.remove("hover"));
-});
 
-// CURSOR IMAGE FOLLOW
-const cursorImg = document.querySelector(".cursor-image");
-document.addEventListener("mousemove", (e) => {
-  gsap.to(cursorImg, {
-    x: e.clientX + 25,
-    y: e.clientY + 25,
-    duration: 0.3,
-    ease: "power3.out"
+// Hover Effects
+document.querySelectorAll("button, .project-card, .skill-card, .testimonial-card")
+  .forEach(el => {
+    el.addEventListener("mouseenter", () => cursor.classList.add("hover"));
+    el.addEventListener("mouseleave", () => cursor.classList.remove("hover"));
   });
-});
 
-// CURSOR IMAGE PREVIEW ON PROJECT HOVER
-const projectCards = document.querySelectorAll(".project-card");
-projectCards.forEach((card) => {
+
+// Cursor preview image on projects
+document.querySelectorAll(".project-card").forEach((card) => {
   card.addEventListener("mouseenter", () => {
-    const img = card.getAttribute("data-image");
-    cursorImg.style.backgroundImage = `url(${img})`;
-    gsap.to(cursorImg, { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out" });
+    cursorImg.style.backgroundImage = `url(${card.dataset.image})`;
+    gsap.to(cursorImg, { opacity: 1, scale: 1 });
   });
-
   card.addEventListener("mouseleave", () => {
-    gsap.to(cursorImg, { opacity: 0, scale: 0.6, duration: 0.3, ease: "power3.out" });
-  });
-});
-
-// MAGNETIC HOVER EFFECT
-const magneticElements = document.querySelectorAll(".primary-btn, .ghost-btn, .project-card");
-magneticElements.forEach((el) => {
-  el.addEventListener("mousemove", (e) => {
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    gsap.to(el, { x: x * 0.25, y: y * 0.25, duration: 0.3, ease: "power3.out" });
-  });
-
-  el.addEventListener("mouseleave", () => {
-    gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.4)" });
-  });
-});
-
-const tiltButtons = document.querySelectorAll(".primary-btn, .ghost-btn");
-
-tiltButtons.forEach((btn) => {
-  btn.addEventListener("mousemove", (e) => {
-    const rect = btn.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
-
-    gsap.to(btn, {
-      rotationY: x,
-      rotationX: y,
-      duration: 0.3,
-      ease: "power3.out",
-    });
-  });
-
-  btn.addEventListener("mouseleave", () => {
-    gsap.to(btn, {
-      rotationY: 0,
-      rotationX: 0,
-      duration: 0.5,
-      ease: "power2.out",
-    });
+    gsap.to(cursorImg, { opacity: 0, scale: 0.6 });
   });
 });
 
 
-// 🔥 HERO PARALLAX GLOW
+// Parallax Glow
 gsap.to(".hero-bg", {
   xPercent: -20,
   yPercent: -10,
-  ease: "none",
-  scrollTrigger: {
-    trigger: ".hero",
-    scrub: 1,
-  }
+  scrollTrigger: { trigger: ".hero", scrub: 1 }
 });
-//Smooth scroll to Projects when clicking button
+
+
+// ScrollTo Buttons
 document.getElementById("scroll-projects").addEventListener("click", () => {
-  gsap.to(window, {
-    duration: 1.2,
-    scrollTo: "#projects",
-    ease: "power3.out"
-  });
+  gsap.to(window, { scrollTo: "#projects", duration: 1.2 });
 });
-
 document.getElementById("scroll-about").addEventListener("click", () => {
-  gsap.to(window, {
-    duration: 1.2,
-    scrollTo: ".about",
-    ease: "power3.out"
-  });
+  gsap.to(window, { scrollTo: ".about", duration: 1.2 });
 });
 
 
-// 3D PARALLAX ON PROJECT CARDS
-projectCards.forEach((card) => {
-  card.addEventListener("mousemove", (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -20;
-    gsap.to(card, { rotationY: x, rotationX: y, duration: 0.35 });
-  });
+// Particle Background
+const canvas = document.getElementById("particle-bg");
+const ctx = canvas.getContext("2d");
 
-  card.addEventListener("mouseleave", () => {
-    gsap.to(card, { rotationY: 0, rotationX: 0, duration: 0.6 });
-  });
+let particlesArray;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const mouse = { x: null, y: null, radius: 120 };
+window.addEventListener("mousemove", (event) => { mouse.x = event.x; mouse.y = event.y; });
+
+class Particle {
+  constructor(x, y, size, speedX, speedY) {
+    this.x = x; this.y = y; this.size = size;
+    this.speedX = speedX; this.speedY = speedY;
+  }
+  draw() {
+    ctx.fillStyle = "rgba(255, 107, 61, 0.8)";
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+
+    let dx = mouse.x - this.x;
+    let dy = mouse.y - this.y;
+    let distance = Math.sqrt(dx * dx + dy * dy);
+    if (distance < mouse.radius) {
+      this.x -= dx / 15;
+      this.y -= dy / 15;
+    }
+  }
+}
+
+function initParticles() {
+  particlesArray = [];
+  for (let i = 0; i < 80; i++) {
+    particlesArray.push(new Particle(
+      Math.random() * canvas.width,
+      Math.random() * canvas.height,
+      Math.random() * 3 + 1,
+      (Math.random() - 0.5),
+      (Math.random() - 0.5),
+    ));
+  }
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particlesArray.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animateParticles);
+}
+
+initParticles();
+animateParticles();
+
+window.addEventListener("resize", () => {
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+  initParticles();
 });
